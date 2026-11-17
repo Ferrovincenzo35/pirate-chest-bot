@@ -87,7 +87,34 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelect
 $('addFriend').onclick=()=>{let name=$('friendName').value.trim(),score=Number($('friendScore').value);if(!name||!Number.isFinite(score)||score<0){alert('Inserisci un nome e un numero valido di casse.');return}data.friends.push({name,score});$('friendName').value='';$('friendScore').value='';save()};
 $('export').onclick=()=>{let rows=[['data','casse'],...data.sessions.map(s=>[s.date,s.count])];let csv=rows.map(r=>r.join(';')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));a.download='pirate-chest-statistiche.csv';a.click();URL.revokeObjectURL(a.href)};
 $('reset').onclick=()=>{if(confirm('Vuoi davvero cancellare tutte le statistiche e la classifica salvate su questo dispositivo?')){data={total:0,sessions:[],friends:[]};count=0;save()}};
-render();
+// PIRATE CHEST BOT - TEST RICONOSCIMENTO OCR
+let chestRecognitionEnabled = false;
+let lastChestDetection = 0;
+let chestOcrBusy = false;
+
+const chestKeywords = [
+  'CHEST',
+  'FORZIERE',
+  'FORZIERE APERTO',
+  'CASSA',
+  'SEARCH'
+];
+
+function detectChestText(text) {
+  const normalized = text.toUpperCase();
+  return chestKeywords.some(word => normalized.includes(word));
+}
+
+function startChestRecognition() {
+  chestRecognitionEnabled = true;
+  $('sessionState').textContent = 'Riconoscimento attivo';
+}
+
+function stopChestRecognition() {
+  chestRecognitionEnabled = false;
+  $('sessionState').textContent = 'Riconoscimento fermato';
+}
+ render();
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script>
 </body></html>
