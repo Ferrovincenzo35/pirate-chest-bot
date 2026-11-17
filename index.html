@@ -102,9 +102,9 @@ canvas.height=video.videoHeight;
 
 const ctx=canvas.getContext('2d');
 ctx.drawImage(video,0,0,canvas.width,canvas.height);
-
+$('sessionState').textContent = 'OCR in elaborazione...';
 const result=await Tesseract.recognize(canvas,'eng');
-
+$('sessionState').textContent = 'OCR completato';
     const text=result.data.text.toUpperCase();
 $('sessionState').textContent = 'Testo letto: ' + (text || 'nessun testo');
     if(detectChestText(text)){
