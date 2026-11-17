@@ -83,6 +83,45 @@ $('minus').onclick=()=>{count=Math.max(0,count-1);$('sessionCount').textContent=
 $('newSession').onclick=()=>{if(count>0&&!confirm('La sessione attuale non è stata salvata. Vuoi iniziarne una nuova?'))return;count=0;$('sessionCount').textContent=0;$('sessionState').textContent='In corso'};
 $('finishSession').onclick=()=>{if(count===0){alert('Aggiungi almeno una cassa prima di salvare.');return}data.total+=count;data.sessions.push({count,date:new Date().toISOString()});count=0;$('sessionCount').textContent=0;$('sessionState').textContent='Salvata';save()};
 $('startCam').onclick=async()=>{try{if(!navigator.mediaDevices?.getUserMedia)throw new Error('Fotocamera non disponibile. Apri la pagina tramite HTTPS in Safari.');stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});$('video').srcObject=stream;$('video').style.display='block';$('placeholder').classList.add('hidden');$('cameraState').textContent='Attiva';$('startCam').disabled=true;$('stopCam').disabled=false}catch(e){alert('Non riesco ad avviare la fotocamera. Controlla i permessi di Safari e assicurati che il sito usi HTTPS. Dettaglio: '+e.message)}};
+
+async function scanChestText(){
+  if(!chestRecognitionEnabled || chestOcrBusy) return;
+
+  if(!$('video').videoWidth){
+    setTimeout(scanChestText,1000);
+    return;
+  }
+
+  chestOcrBusy=true;
+
+  try{
+    const result=await Tesseract.recognize(
+      $('video'),
+      'eng'
+    );
+
+    const text=result.data.text.toUpperCase();
+
+    if(detectChestText(text)){
+      const now=Date.now();
+
+      if(now-lastChestDetection>10000){
+        count++;
+        lastChestDetection=now;
+        $('sessionCount').textContent=count;
+        $('sessionState').textContent='Possibile cassa rilevata!';
+      }
+    }
+  }catch(e){
+    console.log('Errore OCR:',e);
+  }
+
+  chestOcrBusy=false;
+
+  if(chestRecognitionEnabled){
+    setTimeout(scanChestText,2000);
+  }
+}
 $('stopCam').onclick=()=>{if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$('video').srcObject=null;$('video').style.display='none';$('placeholder').classList.remove('hidden');$('cameraState').textContent='Non avviata';$('startCam').disabled=false;$('stopCam').disabled=true};
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab))});
 $('addFriend').onclick=()=>{let name=$('friendName').value.trim(),score=Number($('friendScore').value);if(!name||!Number.isFinite(score)||score<0){alert('Inserisci un nome e un numero valido di casse.');return}data.friends.push({name,score});$('friendName').value='';$('friendScore').value='';save()};
