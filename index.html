@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10100f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pirate Chest Bot">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>PIRATE CHEST BOT</title>
+<style>
+:root{color-scheme:dark;--bg:#0c0d0e;--panel:#17191a;--panel2:#202223;--gold:#e0b65c;--gold2:#9d742d;--muted:#a8a8a2;--line:#353532;--green:#9bd6a3}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#292318 0,#101112 42%,#090a0b 100%);color:#f5f1e7;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.app{max-width:720px;margin:auto;padding:20px 16px 36px}.top{display:flex;align-items:center;gap:12px;margin-bottom:18px}.brandmark{width:48px;height:48px;border:1px solid var(--gold2);border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#302719,#121313);font-size:25px}.brand{font-size:13px;letter-spacing:2.3px;color:var(--gold);font-weight:800}.sub{font-size:12px;color:var(--muted);margin-top:3px}.status{margin-left:auto;border:1px solid #4c4129;color:var(--gold);border-radius:30px;padding:6px 10px;font-size:10px;letter-spacing:1px}
+h1{font-size:27px;line-height:1.12;margin:10px 0 6px}h1 span{color:var(--gold)}.intro{font-size:13px;color:var(--muted);line-height:1.5;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card{background:linear-gradient(145deg,#1b1d1e,#141617);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:0 10px 28px #0005}.stat-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}.stat{font-size:35px;font-weight:800;color:var(--gold);font-variant-numeric:tabular-nums;margin-top:5px}.stat small{font-size:12px;color:var(--muted);font-weight:500}
+.section{margin-top:16px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:0 2px 10px;font-size:14px;font-weight:750}.section-title small{font-size:11px;color:var(--muted);font-weight:500}
+.camera{position:relative;background:#050606;border:1px solid #50452e;border-radius:18px;overflow:hidden;aspect-ratio:16/9;display:grid;place-items:center}.camera video{width:100%;height:100%;object-fit:cover;display:none}.camera .placeholder{text-align:center;color:var(--muted);padding:18px;font-size:13px}.camera .placeholder b{display:block;color:var(--gold);font-size:30px;margin-bottom:6px}.camtag{position:absolute;top:10px;left:10px;background:#000b;border:1px solid #ffffff24;border-radius:20px;padding:5px 9px;font-size:10px;color:#eee}
+.actions{display:flex;gap:9px;margin-top:10px}.btn{border:1px solid var(--gold2);background:linear-gradient(135deg,#d6ae5d,#9c702b);color:#17130b;font-weight:800;border-radius:12px;padding:13px 14px;font-size:13px;flex:1;cursor:pointer}.btn.secondary{background:#242525;color:#eee;border-color:#4b4b45}.btn.ghost{background:transparent;color:var(--gold);border-color:#64512d}.btn:disabled{opacity:.45}
+.counter{display:flex;align-items:center;justify-content:space-between;gap:12px}.countnum{font-size:50px;font-weight:850;color:var(--gold);font-variant-numeric:tabular-nums}.countcontrols{display:flex;gap:8px}.round{width:48px;height:48px;border-radius:50%;border:1px solid var(--gold2);background:#28251e;color:var(--gold);font-size:25px;font-weight:700}
+.note{font-size:11px;color:var(--muted);line-height:1.45;margin:9px 1px 0}.notice{border-left:3px solid var(--gold);padding:10px 12px;background:#241f15;border-radius:0 10px 10px 0;color:#d9cba9;font-size:11px;line-height:1.5;margin-top:12px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:18px 0 12px}.tab{padding:10px 5px;border:1px solid var(--line);background:#161819;color:#bdbbb2;border-radius:11px;font-size:12px;font-weight:700}.tab.active{border-color:var(--gold2);color:var(--gold);background:#282318}
+.panel{display:none}.panel.active{display:block}.historyrow{display:flex;justify-content:space-between;padding:11px 2px;border-bottom:1px solid var(--line);font-size:12px}.historyrow span:last-child{color:var(--gold);font-weight:700}.empty{color:var(--muted);font-size:12px;padding:14px 2px}.friendrow{display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:#17191a;font-size:12px}.friendrow strong{color:var(--gold)}input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:#101213;color:white;font-size:14px;margin:8px 0}.foot{text-align:center;color:#77776f;font-size:10px;line-height:1.5;margin-top:24px}.hidden{display:none!important}
+@media(min-width:600px){.app{padding-top:30px}.stat{font-size:42px}}
+</style>
+</head>
+<body>
+<main class="app">
+<header class="top"><div class="brandmark">🏴‍☠️</div><div><div class="brand">PIRATE CHEST BOT</div><div class="sub">PRIVATE EDITION · VERSIONE DI TEST</div></div><div class="status">BETA</div></header>
+<h1>La caccia al tesoro<br><span>inizia qui.</span></h1>
+<p class="intro">Tieni traccia delle casse, delle sessioni e dei tuoi progressi. Le statistiche restano salvate su questo dispositivo.</p>
+<div class="grid">
+ <div class="card"><div class="stat-label">Casse totali</div><div class="stat" id="total">0</div></div>
+ <div class="card"><div class="stat-label">Sessioni</div><div class="stat" id="sessions">0</div></div>
+</div>
+<div class="section">
+ <div class="section-title">Telecamera <small id="cameraState">Non avviata</small></div>
+ <div class="camera"><video id="video" autoplay playsinline muted></video><div class="placeholder" id="placeholder"><b>📷</b>Inquadra lo schermo della TV<br>e avvia la fotocamera</div><div class="camtag">LIVE CAMERA</div></div>
+ <div class="actions"><button class="btn" id="startCam">Avvia fotocamera</button><button class="btn secondary" id="stopCam" disabled>Ferma</button></div>
+ <div class="notice"><b>Nota:</b> questa versione usa la fotocamera come anteprima. Il riconoscimento automatico delle casse non è ancora implementato: per ora il conteggio si aggiorna con i pulsanti qui sotto.</div>
+</div>
+<div class="section card">
+ <div class="section-title">Sessione attuale <small id="sessionState">In attesa</small></div>
+ <div class="counter"><div><div class="stat-label">Casse trovate</div><div class="countnum" id="sessionCount">0</div></div><div class="countcontrols"><button class="round" id="minus" aria-label="Diminuisci">−</button><button class="round" id="plus" aria-label="Aggiungi cassa">+</button></div></div>
+ <div class="actions"><button class="btn" id="newSession">Nuova sessione</button><button class="btn secondary" id="finishSession">Termina e salva</button></div>
+ <p class="note">Usa + quando trovi una cassa. “Termina e salva” aggiunge il risultato alla cronologia.</p>
+</div>
+<nav class="tabs"><button class="tab active" data-tab="stats">Statistiche</button><button class="tab" data-tab="history">Cronologia</button><button class="tab" data-tab="friends">Amici</button></nav>
+<section class="panel active" id="stats">
+ <div class="grid">
+  <div class="card"><div class="stat-label">Media per sessione</div><div class="stat" id="average">0</div></div>
+  <div class="card"><div class="stat-label">Record sessione</div><div class="stat" id="record">0</div></div>
+ </div>
+ <div class="actions"><button class="btn secondary" id="export">Esporta statistiche CSV</button><button class="btn ghost" id="reset">Azzera dati</button></div>
+</section>
+<section class="panel" id="history"><div class="card"><div class="section-title">Ultime sessioni</div><div id="historyList" class="empty">Ancora nessuna sessione salvata.</div></div></section>
+<section class="panel" id="friends">
+ <div class="card"><div class="section-title">Classifica locale <small>solo su questo telefono</small></div><div class="notice">La classifica è una demo locale: per condividere i punteggi in tempo reale con gli amici servirà un piccolo server o database online.</div><input id="friendName" maxlength="20" placeholder="Nome amico"><input id="friendScore" type="number" min="0" placeholder="Casse trovate"><button class="btn" id="addFriend">Aggiungi risultato</button><div id="friendList" style="margin-top:12px"></div></div>
+</section>
+<footer class="foot">PIRATE CHEST BOT è un progetto indipendente e non è affiliato a Epic Games o Fortnite.<br>Beta privata · I dati vengono salvati localmente sul dispositivo.</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const KEY='pcb_private_v1';
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||{total:0,sessions:[],friends:[]};
+let count=0,stream=null;
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function render(){
+ $('total').textContent=data.total;
+ $('sessions').textContent=data.sessions.length;
+ $('sessionCount').textContent=count;
+ $('average').textContent=data.sessions.length?(data.sessions.reduce((a,s)=>a+s.count,0)/data.sessions.length).toFixed(1):'0';
+ $('record').textContent=data.sessions.length?Math.max(...data.sessions.map(s=>s.count)):'0';
+ $('historyList').innerHTML=data.sessions.length?data.sessions.slice().reverse().map(s=>`<div class="historyrow"><span>${new Date(s.date).toLocaleString('it-IT')}</span><span>${s.count} casse</span></div>`).join(''):'<div class="empty">Ancora nessuna sessione salvata.</div>';
+ $('friendList').innerHTML=data.friends.length?data.friends.slice().sort((a,b)=>b.score-a.score).map((f,i)=>`<div class="friendrow"><span>${i+1}. ${escapeHtml(f.name)}</span><strong>${f.score} casse</strong></div>`).join(''):'<div class="empty">Aggiungi qui i risultati dei tuoi amici.</div>';
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('plus').onclick=()=>{count++;$('sessionCount').textContent=count};
+$('minus').onclick=()=>{count=Math.max(0,count-1);$('sessionCount').textContent=count};
+$('newSession').onclick=()=>{if(count>0&&!confirm('La sessione attuale non è stata salvata. Vuoi iniziarne una nuova?'))return;count=0;$('sessionCount').textContent=0;$('sessionState').textContent='In corso'};
+$('finishSession').onclick=()=>{if(count===0){alert('Aggiungi almeno una cassa prima di salvare.');return}data.total+=count;data.sessions.push({count,date:new Date().toISOString()});count=0;$('sessionCount').textContent=0;$('sessionState').textContent='Salvata';save()};
+$('startCam').onclick=async()=>{try{if(!navigator.mediaDevices?.getUserMedia)throw new Error('Fotocamera non disponibile. Apri la pagina tramite HTTPS in Safari.');stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});$('video').srcObject=stream;$('video').style.display='block';$('placeholder').classList.add('hidden');$('cameraState').textContent='Attiva';$('startCam').disabled=true;$('stopCam').disabled=false}catch(e){alert('Non riesco ad avviare la fotocamera. Controlla i permessi di Safari e assicurati che il sito usi HTTPS. Dettaglio: '+e.message)}};
+$('stopCam').onclick=()=>{if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$('video').srcObject=null;$('video').style.display='none';$('placeholder').classList.remove('hidden');$('cameraState').textContent='Non avviata';$('startCam').disabled=false;$('stopCam').disabled=true};
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab))});
+$('addFriend').onclick=()=>{let name=$('friendName').value.trim(),score=Number($('friendScore').value);if(!name||!Number.isFinite(score)||score<0){alert('Inserisci un nome e un numero valido di casse.');return}data.friends.push({name,score});$('friendName').value='';$('friendScore').value='';save()};
+$('export').onclick=()=>{let rows=[['data','casse'],...data.sessions.map(s=>[s.date,s.count])];let csv=rows.map(r=>r.join(';')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));a.download='pirate-chest-statistiche.csv';a.click();URL.revokeObjectURL(a.href)};
+$('reset').onclick=()=>{if(confirm('Vuoi davvero cancellare tutte le statistiche e la classifica salvate su questo dispositivo?')){data={total:0,sessions:[],friends:[]};count=0;save()}};
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>

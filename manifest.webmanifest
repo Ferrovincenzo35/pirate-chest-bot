@@ -1,0 +1,17 @@
+{
+  "name": "PIRATE CHEST BOT",
+  "short_name": "Chest Bot",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0c0d0e",
+  "theme_color": "#10100f",
+  "description": "Contatore privato di casse e statistiche di gioco.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
