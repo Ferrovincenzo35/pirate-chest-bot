@@ -153,8 +153,8 @@ function detectChestText(text) {
 function startChestRecognition() {
   chestRecognitionEnabled = true;
   $('sessionState').textContent = 'Riconoscimento attivo';
+  scanChestText();
 }
-
 function stopChestRecognition() {
   chestRecognitionEnabled = false;
   $('sessionState').textContent = 'Riconoscimento fermato';
