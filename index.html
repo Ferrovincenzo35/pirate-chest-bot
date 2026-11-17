@@ -122,7 +122,7 @@ async function scanChestText(){
     setTimeout(scanChestText,2000);
   }
 }
-$('stopCam').onclick=()=>{if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$('video').srcObject=null;$('video').style.display='none';$('placeholder').classList.remove('hidden');$('cameraState').textContent='Non avviata';$('startCam').disabled=false;$('stopCam').disabled=true};
+$('stopCam').onclick=()=>{stopChestRecognition();if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$('video').srcObject=null;$('video').style.display='none';$('placeholder').classList.remove('hidden');$('cameraState').textContent='Non avviata';$('startCam').disabled=false;$('stopCam').disabled=true};
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab))});
 $('addFriend').onclick=()=>{let name=$('friendName').value.trim(),score=Number($('friendScore').value);if(!name||!Number.isFinite(score)||score<0){alert('Inserisci un nome e un numero valido di casse.');return}data.friends.push({name,score});$('friendName').value='';$('friendScore').value='';save()};
 $('export').onclick=()=>{let rows=[['data','casse'],...data.sessions.map(s=>[s.date,s.count])];let csv=rows.map(r=>r.join(';')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));a.download='pirate-chest-statistiche.csv';a.click();URL.revokeObjectURL(a.href)};
