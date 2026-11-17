@@ -106,7 +106,7 @@ ctx.drawImage(video,0,0,canvas.width,canvas.height);
 const result=await Tesseract.recognize(canvas,'eng');
 
     const text=result.data.text.toUpperCase();
-
+$('sessionState').textContent = 'Testo letto: ' + (text || 'nessun testo');
     if(detectChestText(text)){
       const now=Date.now();
 
